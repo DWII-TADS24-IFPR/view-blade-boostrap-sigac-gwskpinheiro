@@ -3,34 +3,48 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comprovante;
-use App\Models\Aluno;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreComprovanteRequest;
+use App\Http\Requests\UpdateComprovanteRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class ComprovanteController extends Controller
 {
-    public function index()
+    public function index(): View
     {
-        $comprovantes = Comprovante::with('aluno')->get();
-        return view('comprovantes.index', compact('comprovantes'));
+        return view('comprovantes.index', ['comprovantes' => Comprovante::all()]);
     }
 
-    public function create()
+    public function create(): View
     {
-        $alunos = Aluno::all();
-        return view('comprovantes.create', compact('alunos'));
+        return view('comprovantes.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreComprovanteRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'aluno_id' => 'required|exists:alunos,id',
-            'data_envio' => 'required|date',
-            'arquivo' => 'required|string|max:255'
-        ]);
+        Comprovante::create($request->validated());
+        return redirect()->route('comprovantes.index')->with('success', 'Comprovante criado com sucesso.');
+    }
 
-        Comprovante::create($validated);
+    public function show(Comprovante $comprovantes): View
+    {
+        return view('comprovantes.show', compact('comprovantes'));
+    }
 
-        return redirect()->route('comprovantes.index')
-            ->with('success', 'Comprovante registrado!');
+    public function edit(Comprovante $comprovantes): View
+    {
+        return view('comprovantes.edit', compact('comprovantes'));
+    }
+
+    public function update(UpdateComprovanteRequest $request, Comprovante $comprovantes): RedirectResponse
+    {
+        $comprovantes->update($request->validated());
+        return redirect()->route('comprovantes.index')->with('success', 'Comprovante atualizado com sucesso.');
+    }
+
+    public function destroy(Comprovante $comprovantes): RedirectResponse
+    {
+        $comprovantes->delete();
+        return redirect()->route('comprovantes.index')->with('success', 'Comprovante excluído com sucesso.');
     }
 }

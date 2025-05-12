@@ -2,64 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Categoria;
+use App\Http\Requests\StoreCategoriaRequest;
+use App\Http\Requests\UpdateCategoriaRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class CategoriaController extends Controller
 {
-    public function index()
+    public function index(): View
     {
-        $categorias = Categoria::all();
-        return view('categorias.index', compact('categorias'));
+        return view('categorias.index', ['categorias' => Categoria::all()]);
     }
 
-    public function create()
+    public function create(): View
     {
         return view('categorias.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreCategoriaRequest $request): RedirectResponse
     {
-        $request->validate([
-            'nome' => 'required|unique:categorias',
-            'descricao' => 'nullable',
-        ]);
-
-        Categoria::create($request->all());
-
-        return redirect()->route('categorias.index')->with('success', 'Categoria cadastrada com sucesso!');
+        Categoria::create($request->validated());
+        return redirect()->route('categorias.index')->with('success', 'Categoria criado com sucesso.');
     }
 
-    public function show($id)
+    public function show(Categoria $categorias): View
     {
-        $categoria = Categoria::findOrFail($id);
-        return view('categorias.show', compact('categoria'));
+        return view('categorias.show', compact('categorias'));
     }
 
-    public function edit($id)
+    public function edit(Categoria $categorias): View
     {
-        $categoria = Categoria::findOrFail($id);
-        return view('categorias.edit', compact('categoria'));
+        return view('categorias.edit', compact('categorias'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateCategoriaRequest $request, Categoria $categorias): RedirectResponse
     {
-        $request->validate([
-            'nome' => 'required|unique:categorias,nome,' . $id,
-            'descricao' => 'nullable',
-        ]);
-
-        $categoria = Categoria::findOrFail($id);
-        $categoria->update($request->all());
-
-        return redirect()->route('categorias.index')->with('success', 'Categoria atualizada com sucesso!');
+        $categorias->update($request->validated());
+        return redirect()->route('categorias.index')->with('success', 'Categoria atualizado com sucesso.');
     }
 
-    public function destroy($id)
+    public function destroy(Categoria $categorias): RedirectResponse
     {
-        $categoria = Categoria::findOrFail($id);
-        $categoria->delete();
-
-        return redirect()->route('categorias.index')->with('success', 'Categoria removida com sucesso!');
+        $categorias->delete();
+        return redirect()->route('categorias.index')->with('success', 'Categoria excluído com sucesso.');
     }
 }

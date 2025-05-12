@@ -1,15 +1,18 @@
-<div>
-    <h1>Criar Categoria</h1>
+@extends('layouts.app')
+
+@section('title', 'Novo')
+
+@section('content')
+    <h1>Novo Registro</h1>
     <form action="{{ route('categorias.store') }}" method="POST">
         @csrf
-        <div>
-            <label for="nome">Nome:</label>
-            <input type="text" name="nome" required>
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" name="nome" id="nome" class="form-control" value="{{ old('nome') }}">
+            @error('nome')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
-        <div>
-            <label for="descricao">Descrição:</label>
-            <textarea name="descricao"></textarea>
-        </div>
-        <button type="submit">Salvar</button>
+        <button type="submit" class="btn btn-success">Salvar</button>
     </form>
-</div>
+@endsection

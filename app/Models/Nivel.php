@@ -10,15 +10,14 @@ class Nivel extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = [
-        'nome',
-        'descricao'
-    ];
+    protected $table = 'niveis'; 
+
+    protected $fillable = ['nome'];
 
     protected $dates = ['deleted_at'];
 
-    public function cursos(): HasMany
+    public function turmas(): HasMany
     {
-        return $this->hasMany(Curso::class);
+        return $this->hasMany(Turma::class);
     }
 }

@@ -10,15 +10,9 @@ class Declaracao extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = [
-        'aluno_id',
-        'data_emissao',
-        'codigo'
-    ];
-
-    protected $casts = [
-        'data_emissao' => 'date',
-    ];
+    protected $table = 'declaracoes';
+    
+    protected $fillable = ['aluno_id', 'descricao', 'arquivo'];
 
     protected $dates = ['deleted_at'];
 

@@ -11,22 +11,18 @@ class Turma extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = [
-        'nome',
-        'curso_id',
-        'data_inicio'
-    ];
-
-    protected $casts = [
-        'data_inicio' => 'date',
-    ];
+    protected $fillable = ['nome', 'curso_id', 'nivel_id', 'ano'];
 
     protected $dates = ['deleted_at'];
 
-    // Relacionamentos
     public function curso(): BelongsTo
     {
         return $this->belongsTo(Curso::class);
+    }
+
+    public function nivel(): BelongsTo
+    {
+        return $this->belongsTo(Nivel::class);
     }
 
     public function alunos(): BelongsToMany

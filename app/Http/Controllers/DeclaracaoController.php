@@ -2,69 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Declaracao;
-use App\Models\Aluno;
+use App\Http\Requests\StoreDeclaracaoRequest;
+use App\Http\Requests\UpdateDeclaracaoRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class DeclaracaoController extends Controller
 {
-    public function index()
+    public function index(): View
     {
-        $declaracoes = Declaracao::with('aluno')->get();
-        return view('declaracoes.index', compact('declaracoes'));
+        return view('declaracaos.index', ['declaracaos' => Declaracao::all()]);
     }
 
-    public function create()
+    public function create(): View
     {
-        $alunos = Aluno::all();
-        return view('declaracoes.create', compact('alunos'));
+        return view('declaracaos.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreDeclaracaoRequest $request): RedirectResponse
     {
-        $request->validate([
-            'aluno_id' => 'required|exists:alunos,id',
-            'data_emissao' => 'required|date',
-            'codigo' => 'required|unique:declaracoes',
-        ]);
-
-        Declaracao::create($request->all());
-
-        return redirect()->route('declaracoes.index')->with('success', 'Declaração cadastrada com sucesso!');
+        Declaracao::create($request->validated());
+        return redirect()->route('declaracaos.index')->with('success', 'Declaracao criado com sucesso.');
     }
 
-    public function show($id)
+    public function show(Declaracao $declaracaos): View
     {
-        $declaracao = Declaracao::with('aluno')->findOrFail($id);
-        return view('declaracoes.show', compact('declaracao'));
+        return view('declaracaos.show', compact('declaracaos'));
     }
 
-    public function edit($id)
+    public function edit(Declaracao $declaracaos): View
     {
-        $declaracao = Declaracao::findOrFail($id);
-        $alunos = Aluno::all();
-        return view('declaracoes.edit', compact('declaracao', 'alunos'));
+        return view('declaracaos.edit', compact('declaracaos'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateDeclaracaoRequest $request, Declaracao $declaracaos): RedirectResponse
     {
-        $request->validate([
-            'aluno_id' => 'required|exists:alunos,id',
-            'data_emissao' => 'required|date',
-            'codigo' => 'required|unique:declaracoes,codigo,' . $id,
-        ]);
-
-        $declaracao = Declaracao::findOrFail($id);
-        $declaracao->update($request->all());
-
-        return redirect()->route('declaracoes.index')->with('success', 'Declaração atualizada com sucesso!');
+        $declaracaos->update($request->validated());
+        return redirect()->route('declaracaos.index')->with('success', 'Declaracao atualizado com sucesso.');
     }
 
-    public function destroy($id)
+    public function destroy(Declaracao $declaracaos): RedirectResponse
     {
-        $declaracao = Declaracao::findOrFail($id);
-        $declaracao->delete();
-
-        return redirect()->route('declaracoes.index')->with('success', 'Declaração removida com sucesso!');
+        $declaracaos->delete();
+        return redirect()->route('declaracaos.index')->with('success', 'Declaracao excluído com sucesso.');
     }
 }

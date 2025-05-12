@@ -3,20 +3,16 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Categoria;
+use Illuminate\Support\Facades\DB;
 
 class CategoriaSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
-        Categoria::create([
-            'nome' => 'Documentação Acadêmica',
-            'descricao' => 'Documentos relacionados a matrículas e históricos.',
-        ]);
-
-        Categoria::create([
-            'nome' => 'Comprovantes Financeiros',
-            'descricao' => 'Comprovantes de pagamento e bolsas.',
+        DB::table('categorias')->insert([
+            ['nome' => 'RG'],
+            ['nome' => 'CPF'],
+            ['nome' => 'Histórico Escolar'],
         ]);
     }
 }

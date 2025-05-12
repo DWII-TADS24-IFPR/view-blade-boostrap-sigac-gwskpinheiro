@@ -1,27 +1,18 @@
-<div>
-    <h1>Cadastrar Documento</h1>
+@extends('layouts.app')
+
+@section('title', 'Novo')
+
+@section('content')
+    <h1>Novo Registro</h1>
     <form action="{{ route('documentos.store') }}" method="POST">
         @csrf
-        <div>
-            <label for="aluno_id">Aluno:</label>
-            <select name="aluno_id" required>
-                @foreach($alunos as $aluno)
-                    <option value="{{ $aluno->id }}">{{ $aluno->nome }}</option>
-                @endforeach
-            </select>
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" name="nome" id="nome" class="form-control" value="{{ old('nome') }}">
+            @error('nome')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
         </div>
-        <div>
-            <label for="tipo">Tipo:</label>
-            <select name="tipo" required>
-                <option value="RG">RG</option>
-                <option value="CPF">CPF</option>
-                <option value="Certidão">Certidão</option>
-            </select>
-        </div>
-        <div>
-            <label for="numero">Número:</label>
-            <input type="text" name="numero" required>
-        </div>
-        <button type="submit">Cadastrar</button>
+        <button type="submit" class="btn btn-success">Salvar</button>
     </form>
-</div>
+@endsection

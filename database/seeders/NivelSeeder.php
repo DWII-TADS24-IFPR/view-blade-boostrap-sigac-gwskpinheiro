@@ -3,20 +3,16 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Nivel;
+use Illuminate\Support\Facades\DB;
 
 class NivelSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
-        Nivel::create([
-            'nome' => 'Iniciante',
-            'descricao' => 'Para alunos sem experiência prévia.',
-        ]);
-
-        Nivel::create([
-            'nome' => 'Avançado',
-            'descricao' => 'Para alunos com conhecimentos sólidos.',
+        DB::table('niveis')->insert([
+            ['nome' => 'Básico'],
+            ['nome' => 'Intermediário'],
+            ['nome' => 'Avançado'],
         ]);
     }
 }

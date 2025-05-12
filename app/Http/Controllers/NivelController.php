@@ -2,64 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Nivel;
+use App\Http\Requests\StoreNivelRequest;
+use App\Http\Requests\UpdateNivelRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class NivelController extends Controller
 {
-    public function index()
+    public function index(): View
     {
-        $niveis = Nivel::all();
-        return view('niveis.index', compact('niveis'));
+        return view('niveis.index', ['niveis' => Nivel::all()]);
     }
 
-    public function create()
+    public function create(): View
     {
         return view('niveis.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreNivelRequest $request): RedirectResponse
     {
-        $request->validate([
-            'nome' => 'required|unique:niveis',
-            'descricao' => 'nullable',
-        ]);
-
-        Nivel::create($request->all());
-
-        return redirect()->route('niveis.index')->with('success', 'Nível cadastrado com sucesso!');
+        Nivel::create($request->validated());
+        return redirect()->route('niveis.index')->with('success', 'Nivel criado com sucesso.');
     }
 
-    public function show($id)
+    public function show(Nivel $niveis): View
     {
-        $nivel = Nivel::findOrFail($id);
-        return view('niveis.show', compact('nivel'));
+        return view('niveis.show', compact('niveis'));
     }
 
-    public function edit($id)
+    public function edit(Nivel $niveis): View
     {
-        $nivel = Nivel::findOrFail($id);
-        return view('niveis.edit', compact('nivel'));
+        return view('niveis.edit', compact('niveis'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateNivelRequest $request, Nivel $niveis): RedirectResponse
     {
-        $request->validate([
-            'nome' => 'required|unique:niveis,nome,' . $id,
-            'descricao' => 'nullable',
-        ]);
-
-        $nivel = Nivel::findOrFail($id);
-        $nivel->update($request->all());
-
-        return redirect()->route('niveis.index')->with('success', 'Nível atualizado com sucesso!');
+        $niveis->update($request->validated());
+        return redirect()->route('niveis.index')->with('success', 'Nivel atualizado com sucesso.');
     }
 
-    public function destroy($id)
+    public function destroy(Nivel $niveis): RedirectResponse
     {
-        $nivel = Nivel::findOrFail($id);
-        $nivel->delete();
-
-        return redirect()->route('niveis.index')->with('success', 'Nível removido com sucesso!');
+        $niveis->delete();
+        return redirect()->route('niveis.index')->with('success', 'Nivel excluído com sucesso.');
     }
 }

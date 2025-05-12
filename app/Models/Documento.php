@@ -10,24 +10,17 @@ class Documento extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = [
-        'aluno_id',
-        'tipo',
-        'numero'
-    ];
+    protected $fillable = ['aluno_id', 'categoria_id', 'nome', 'arquivo'];
 
     protected $dates = ['deleted_at'];
-
-    // Tipos permitidos (enum)
-    const TIPOS = [
-        'RG',
-        'CPF',
-        'Certidão',
-        'Histórico'
-    ];
 
     public function aluno(): BelongsTo
     {
         return $this->belongsTo(Aluno::class);
+    }
+
+    public function categoria(): BelongsTo
+    {
+        return $this->belongsTo(Categoria::class);
     }
 }
