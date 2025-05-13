@@ -14,14 +14,14 @@
             </tr>
         </thead>
         <tbody>
-        @foreach($items as $item)
+        @foreach($cursos as $curso)
             <tr>
-                <td>{{ $item->id }}</td>
-                <td>{{ $item->nome ?? '-' }}</td>
+                <td>{{ $curso->id }}</td>
+                <td>{{ $curso->nome ?? '-' }}</td>
                 <td>
-                    <a href="{{ route('cursos.show', $item) }}" class="btn btn-info btn-sm">Ver</a>
-                    <a href="{{ route('cursos.edit', $item) }}" class="btn btn-warning btn-sm">Editar</a>
-                    <form action="{{ route('cursos.destroy', $item) }}" method="POST" class="d-inline">
+                    <a href="{{ route('cursos.show', $curso) }}" class="btn btn-info btn-sm">Ver</a>
+                    <a href="{{ route('cursos.edit', $curso) }}" class="btn btn-warning btn-sm">Editar</a>
+                    <form action="{{ route('cursos.destroy', $curso) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza?')">Excluir</button>

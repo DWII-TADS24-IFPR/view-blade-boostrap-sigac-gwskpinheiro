@@ -13,12 +13,12 @@ class StoreAlunoRequest extends FormRequest
 
     public function rules(): array
     {
-            return [
+        return [
             'nome' => 'required|string|max:255',
-            'matricula' => 'required|string|max:255', 
-            'email' => 'required|email|max:255',
-            'data_nascimento' => 'required|date',
-            'cpf' => 'required|string|max:14',
+            'matricula' => 'required|string|max:20',
+            'email' => 'nullable|email|max:255',
+            'data_nascimento' => 'nullable|date',
+            'cpf' => 'nullable|string|max:14',
         ];
     }
 }

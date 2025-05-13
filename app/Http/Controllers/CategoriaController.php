@@ -12,7 +12,10 @@ class CategoriaController extends Controller
 {
     public function index(): View
     {
-        return view('categorias.index', ['categorias' => Categoria::all()]);
+        return view('categorias.index', [
+            'categorias' => Categoria::all(),
+            'title' => 'Categorias',
+        ]);
     }
 
     public function create(): View
@@ -23,28 +26,28 @@ class CategoriaController extends Controller
     public function store(StoreCategoriaRequest $request): RedirectResponse
     {
         Categoria::create($request->validated());
-        return redirect()->route('categorias.index')->with('success', 'Categoria criado com sucesso.');
+        return redirect()->route('categorias.index')->with('success', 'Categoria criada com sucesso.');
     }
 
-    public function show(Categoria $categorias): View
+    public function show(Categoria $categoria): View
     {
-        return view('categorias.show', compact('categorias'));
+        return view('categorias.show', compact('categoria'));
     }
 
-    public function edit(Categoria $categorias): View
+    public function edit(Categoria $categoria): View
     {
-        return view('categorias.edit', compact('categorias'));
+        return view('categorias.edit', compact('categoria'));
     }
 
-    public function update(UpdateCategoriaRequest $request, Categoria $categorias): RedirectResponse
+    public function update(UpdateCategoriaRequest $request, Categoria $categoria): RedirectResponse
     {
-        $categorias->update($request->validated());
-        return redirect()->route('categorias.index')->with('success', 'Categoria atualizado com sucesso.');
+        $categoria->update($request->validated());
+        return redirect()->route('categorias.index')->with('success', 'Categoria atualizada com sucesso.');
     }
 
-    public function destroy(Categoria $categorias): RedirectResponse
+    public function destroy(Categoria $categoria): RedirectResponse
     {
-        $categorias->delete();
-        return redirect()->route('categorias.index')->with('success', 'Categoria excluído com sucesso.');
+        $categoria->delete();
+        return redirect()->route('categorias.index')->with('success', 'Categoria excluída com sucesso.');
     }
 }

@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', ucfirst($title))
+@section('title', 'Comprovantes')
 
 @section('content')
-    <h1>{{ ucfirst($title) }}</h1>
+    <h1>Comprovantes</h1>
     <a href="{{ route('comprovantes.create') }}" class="btn btn-primary mb-3">Novo</a>
     <table class="table table-bordered">
         <thead>
@@ -14,14 +14,14 @@
             </tr>
         </thead>
         <tbody>
-        @foreach($items as $item)
+        @foreach($comprovantes as $comprovante)
             <tr>
-                <td>{{ $item->id }}</td>
-                <td>{{ $item->nome ?? '-' }}</td>
+                <td>{{ $comprovante->id }}</td>
+                <td>{{ $comprovante->nome ?? '-' }}</td>
                 <td>
-                    <a href="{{ route('comprovantes.show', $item) }}" class="btn btn-info btn-sm">Ver</a>
-                    <a href="{{ route('comprovantes.edit', $item) }}" class="btn btn-warning btn-sm">Editar</a>
-                    <form action="{{ route('comprovantes.destroy', $item) }}" method="POST" class="d-inline">
+                    <a href="{{ route('comprovantes.show', $comprovante) }}" class="btn btn-info btn-sm">Ver</a>
+                    <a href="{{ route('comprovantes.edit', $comprovante) }}" class="btn btn-warning btn-sm">Editar</a>
+                    <form action="{{ route('comprovantes.destroy', $comprovante) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza?')">Excluir</button>

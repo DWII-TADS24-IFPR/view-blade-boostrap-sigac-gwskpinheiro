@@ -14,7 +14,9 @@ class UpdateDeclaracaoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|string|max:255',
+            'descricao' => 'required|string|max:255',
+            'aluno_id' => 'required|exists:alunos,id',
+            'arquivo' => 'nullable|file|mimes:pdf|max:2048', // até 2MB
         ];
     }
 }

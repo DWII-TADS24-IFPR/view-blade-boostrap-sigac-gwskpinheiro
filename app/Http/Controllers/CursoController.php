@@ -12,7 +12,10 @@ class CursoController extends Controller
 {
     public function index(): View
     {
-        return view('cursos.index', ['cursos' => Curso::all()]);
+        return view('cursos.index', [
+            'cursos' => Curso::all(),
+            'title' => 'Cursos',
+        ]);
     }
 
     public function create(): View
@@ -26,25 +29,25 @@ class CursoController extends Controller
         return redirect()->route('cursos.index')->with('success', 'Curso criado com sucesso.');
     }
 
-    public function show(Curso $cursos): View
+    public function show(Curso $curso): View
     {
-        return view('cursos.show', compact('cursos'));
+        return view('cursos.show', compact('curso'));
     }
 
-    public function edit(Curso $cursos): View
+    public function edit(Curso $curso): View
     {
-        return view('cursos.edit', compact('cursos'));
+        return view('cursos.edit', compact('curso'));
     }
 
-    public function update(UpdateCursoRequest $request, Curso $cursos): RedirectResponse
+    public function update(UpdateCursoRequest $request, Curso $curso): RedirectResponse
     {
-        $cursos->update($request->validated());
+        $curso->update($request->validated());
         return redirect()->route('cursos.index')->with('success', 'Curso atualizado com sucesso.');
     }
 
-    public function destroy(Curso $cursos): RedirectResponse
+    public function destroy(Curso $curso): RedirectResponse
     {
-        $cursos->delete();
+        $curso->delete();
         return redirect()->route('cursos.index')->with('success', 'Curso excluído com sucesso.');
     }
 }

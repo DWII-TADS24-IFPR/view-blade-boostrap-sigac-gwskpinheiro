@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Novo')
+@section('title', $title)
 
 @section('content')
-    <h1>Novo Registro</h1>
+    <h1>{{ $title }}</h1>
     <form action="{{ route('niveis.store') }}" method="POST">
         @csrf
         <div class="mb-3">

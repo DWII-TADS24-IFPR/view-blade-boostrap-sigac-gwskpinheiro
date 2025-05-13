@@ -15,6 +15,10 @@ class UpdateAlunoRequest extends FormRequest
     {
         return [
             'nome' => 'required|string|max:255',
+            'matricula' => 'required|string|max:20',
+            'email' => 'nullable|email|max:255',
+            'data_nascimento' => 'nullable|date',
+            'cpf' => 'nullable|string|max:14',
         ];
     }
 }

@@ -19,9 +19,9 @@
                 <td>{{ $turma->id }}</td>
                 <td>{{ $turma->nome ?? '-' }}</td>
                 <td>
-                    <a href="{{ route('turmas.show', $item) }}" class="btn btn-info btn-sm">Ver</a>
-                    <a href="{{ route('turmas.edit', $item) }}" class="btn btn-warning btn-sm">Editar</a>
-                    <form action="{{ route('turmas.destroy', $item) }}" method="POST" class="d-inline">
+                    <a href="{{ route('turmas.show', $turma) }}" class="btn btn-info btn-sm">Ver</a>
+                    <a href="{{ route('turmas.edit', $turma) }}" class="btn btn-warning btn-sm">Editar</a>
+                    <form action="{{ route('turmas.destroy', $turma) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza?')">Excluir</button>
@@ -29,6 +29,7 @@
                 </td>
             </tr>
         @endforeach
+
         </tbody>
     </table>
 @endsection

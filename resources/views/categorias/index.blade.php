@@ -14,14 +14,14 @@
             </tr>
         </thead>
         <tbody>
-        @foreach($items as $item)
+        @foreach($categorias as $categoria)
             <tr>
-                <td>{{ $item->id }}</td>
-                <td>{{ $item->nome ?? '-' }}</td>
+                <td>{{ $categoria->id }}</td>
+                <td>{{ $categoria->nome ?? '-' }}</td>
                 <td>
-                    <a href="{{ route('categorias.show', $item) }}" class="btn btn-info btn-sm">Ver</a>
-                    <a href="{{ route('categorias.edit', $item) }}" class="btn btn-warning btn-sm">Editar</a>
-                    <form action="{{ route('categorias.destroy', $item) }}" method="POST" class="d-inline">
+                    <a href="{{ route('categorias.show', $categoria) }}" class="btn btn-info btn-sm">Ver</a>
+                    <a href="{{ route('categorias.edit', $categoria) }}" class="btn btn-warning btn-sm">Editar</a>
+                    <form action="{{ route('categorias.destroy', $categoria) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza?')">Excluir</button>

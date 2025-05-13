@@ -4,7 +4,9 @@
 
 @section('content')
     <h1>{{ ucfirst($title) }}</h1>
+
     <a href="{{ route('niveis.create') }}" class="btn btn-primary mb-3">Novo</a>
+
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -14,14 +16,14 @@
             </tr>
         </thead>
         <tbody>
-        @foreach($items as $item)
+        @foreach($niveis as $nivel)
             <tr>
-                <td>{{ $item->id }}</td>
-                <td>{{ $item->nome ?? '-' }}</td>
+                <td>{{ $nivel->id }}</td>
+                <td>{{ $nivel->nome ?? '-' }}</td>
                 <td>
-                    <a href="{{ route('niveis.show', $item) }}" class="btn btn-info btn-sm">Ver</a>
-                    <a href="{{ route('niveis.edit', $item) }}" class="btn btn-warning btn-sm">Editar</a>
-                    <form action="{{ route('niveis.destroy', $item) }}" method="POST" class="d-inline">
+                    <a href="{{ route('niveis.show', $nivel) }}" class="btn btn-info btn-sm">Ver</a>
+                    <a href="{{ route('niveis.edit', $nivel) }}" class="btn btn-warning btn-sm">Editar</a>
+                    <form action="{{ route('niveis.destroy', $nivel) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza?')">Excluir</button>

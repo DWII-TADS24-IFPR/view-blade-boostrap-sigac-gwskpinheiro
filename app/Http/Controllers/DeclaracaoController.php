@@ -10,41 +10,56 @@ use Illuminate\View\View;
 
 class DeclaracaoController extends Controller
 {
+
+    
+
     public function index(): View
     {
-        return view('declaracaos.index', ['declaracaos' => Declaracao::all()]);
+        return view('declaracoes.index', ['declaracoes' => Declaracao::all()]);
     }
 
     public function create(): View
     {
-        return view('declaracaos.create');
+        return view('declaracoes.create', [
+        'alunos' => \App\Models\Aluno::all()
+    ]);
     }
 
     public function store(StoreDeclaracaoRequest $request): RedirectResponse
     {
-        Declaracao::create($request->validated());
-        return redirect()->route('declaracaos.index')->with('success', 'Declaracao criado com sucesso.');
+        $data = $request->validated();
+
+        if ($request->hasFile('arquivo')) {
+            $data['arquivo'] = $request->file('arquivo')->store('declaracoes');
+        }
+
+        \App\Models\Declaracao::create($data);
+
+        return redirect()->route('declaracoes.index')->with('success', 'Declaração criada com sucesso.');
     }
 
-    public function show(Declaracao $declaracaos): View
+        public function show(Declaracao $declaracao): View
     {
-        return view('declaracaos.show', compact('declaracaos'));
+        return view('declaracoes.show', ['declaracao' => $declaracao]);
     }
 
-    public function edit(Declaracao $declaracaos): View
+        public function edit(Declaracao $declaracao): View
     {
-        return view('declaracaos.edit', compact('declaracaos'));
+        return view('declaracoes.edit', [
+            'declaracao' => $declaracao,
+            'alunos' => \App\Models\Aluno::all()
+        ]);
     }
 
-    public function update(UpdateDeclaracaoRequest $request, Declaracao $declaracaos): RedirectResponse
+    public function update(UpdateDeclaracaoRequest $request, Declaracao $declaracao): RedirectResponse
     {
-        $declaracaos->update($request->validated());
-        return redirect()->route('declaracaos.index')->with('success', 'Declaracao atualizado com sucesso.');
+        $declaracao->update($request->validated());
+        return redirect()->route('declaracoes.index')->with('success', 'Declaração atualizada com sucesso.');
     }
 
-    public function destroy(Declaracao $declaracaos): RedirectResponse
+    public function destroy(Declaracao $declaracao): RedirectResponse
     {
-        $declaracaos->delete();
-        return redirect()->route('declaracaos.index')->with('success', 'Declaracao excluído com sucesso.');
+        $declaracao->delete();
+        return redirect()->route('declaracoes.index')->with('success', 'Declaração excluída com sucesso.');
     }
 }

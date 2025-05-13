@@ -15,6 +15,9 @@ class StoreTurmaRequest extends FormRequest
     {
         return [
             'nome' => 'required|string|max:255',
+            'curso_id' => 'required|exists:cursos,id',
+            'nivel_id' => 'required|exists:niveis,id',
+            'ano' => 'required|integer|between:2000,2100',
         ];
     }
 }

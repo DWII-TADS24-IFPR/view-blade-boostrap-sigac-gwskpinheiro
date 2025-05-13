@@ -15,6 +15,9 @@ class StoreDocumentoRequest extends FormRequest
     {
         return [
             'nome' => 'required|string|max:255',
+            'aluno_id' => 'required|exists:alunos,id',
+            'categoria_id' => 'required|exists:categorias,id',
+            'arquivo' => 'required|file|mimes:pdf|max:10240', // até 10MB
         ];
     }
 }

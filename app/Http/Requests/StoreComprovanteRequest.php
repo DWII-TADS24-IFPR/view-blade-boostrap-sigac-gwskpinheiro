@@ -14,7 +14,9 @@ class StoreComprovanteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|string|max:255',
+            'aluno_id' => 'required|exists:alunos,id',
+            'descricao' => 'required|string|max:255',
+            'arquivo' => 'required|file|mimes:pdf,jpg,png|max:2048',
         ];
     }
 }

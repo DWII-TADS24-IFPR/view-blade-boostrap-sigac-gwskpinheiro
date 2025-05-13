@@ -25,7 +25,6 @@ class Aluno extends Model
 
     protected $dates = ['deleted_at'];
 
-    // Relacionamentos
     public function documentos(): HasMany
     {
         return $this->hasMany(Documento::class);

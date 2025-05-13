@@ -12,39 +12,50 @@ class NivelController extends Controller
 {
     public function index(): View
     {
-        return view('niveis.index', ['niveis' => Nivel::all()]);
+        return view('niveis.index', [
+            'niveis' => Nivel::all(),
+            'title' => 'Níveis'
+        ]);
     }
 
     public function create(): View
     {
-        return view('niveis.create');
+        return view('niveis.create', [
+            'title' => 'Novo Nível'
+        ]);
     }
 
     public function store(StoreNivelRequest $request): RedirectResponse
     {
         Nivel::create($request->validated());
-        return redirect()->route('niveis.index')->with('success', 'Nivel criado com sucesso.');
+        return redirect()->route('niveis.index')->with('success', 'Nível criado com sucesso.');
     }
 
-    public function show(Nivel $niveis): View
+    public function show(Nivel $nivel): View
     {
-        return view('niveis.show', compact('niveis'));
+        return view('niveis.show', [
+            'nivel' => $nivel,
+            'title' => 'Detalhes do Nível'
+        ]);
     }
 
-    public function edit(Nivel $niveis): View
+    public function edit(Nivel $nivel): View
     {
-        return view('niveis.edit', compact('niveis'));
+        return view('niveis.edit', [
+            'nivel' => $nivel,
+            'title' => 'Editar Nível'
+        ]);
     }
 
-    public function update(UpdateNivelRequest $request, Nivel $niveis): RedirectResponse
+    public function update(UpdateNivelRequest $request, Nivel $nivel): RedirectResponse
     {
-        $niveis->update($request->validated());
-        return redirect()->route('niveis.index')->with('success', 'Nivel atualizado com sucesso.');
+        $nivel->update($request->validated());
+        return redirect()->route('niveis.index')->with('success', 'Nível atualizado com sucesso.');
     }
 
-    public function destroy(Nivel $niveis): RedirectResponse
+    public function destroy(Nivel $nivel): RedirectResponse
     {
-        $niveis->delete();
-        return redirect()->route('niveis.index')->with('success', 'Nivel excluído com sucesso.');
+        $nivel->delete();
+        return redirect()->route('niveis.index')->with('success', 'Nível excluído com sucesso.');
     }
 }
